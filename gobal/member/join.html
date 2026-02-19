@@ -1,71 +1,23 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>회원 가입</title>
-        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <script>
-            function searchAddress(){
-                new daum.Postcode({
-                    oncomplete: function(data) {
-                        document.getElementById('address').value= data.address;
-                    }
-                }).open();
-            }
-        </script>
-    </head>
-    <body>
-        <h1>회원 가입</h1>
-        <form action="/gobal/member/join.html">
-            <table>
-                <tr>
-                    <td>아이디</td>
-                        <input type="text" id="mId">
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td><label for="mPassword">비밀번호</label></td>
-                    <input type="text" id="mPassword" placeholder="비밀번호">
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>비밀번호 확인</td>
-                    <input type="text" id="mPw" >
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td><label for="gen">성별</label></td>
-                    <input type="radio" id="men" placeholder="남자">
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td><label for="gen"></label></td>
-                    <input type="radio" id="ga" placeholder="여자">
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td><label for="address">주소</label></td>
-                    <button type="button" onclick="searchAddress">주소 검색</button>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td><label for="rrn">주민번호</label></td>
-                    <input type="text" id="rrn" placeholder="주민 번호 앞자리"> -
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td><label for="rrn1"></label></td>
-                    <input type="text" id="rrn1" placeholder="주민 번호 뒷자리">
-                </tr>
-            </table>
-            <button type="submit">확인</button>
-        </form>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>지도 생성하기</title>
+    
+</head>
+<body>
+<!-- 지도를 표시할 div 입니다 -->
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 APP KEY를 사용하세요"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+</script>
+</body>
 </html>

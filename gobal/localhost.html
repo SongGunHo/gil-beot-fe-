@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>지도 생성하기</title>
+
+  <!-- ✅ 키 정확히 + https 고정 -->
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a2cfe81416fec3f5169aa956268cdf82"></script>
+</head>
+<body>
+
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script>
+  window.onload = function () {
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      level: 3
+    };
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+  };
+</script>
+
+</body>
+</html>
