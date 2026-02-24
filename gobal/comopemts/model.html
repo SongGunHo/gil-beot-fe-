@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <!-- 버튼-->
+         <button id="openModal">모달 열기</button>
+
+         <!--모달-->
+         <div class="modal" id="modal" aria-hidden="true">
+            <div class="modal-backdrop" data-colse="true"></div>
+            <div class="modal-pnel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <!--화면에 보이는 것 -->
+                <header class="modal_header">
+                    <h2 id="modalTitle">알림</h2>
+                    <button class="modal_close" type="button" data-colse="true" aria-label="닫기"></button>
+                </header>
+           
+
+                <div class="modal_body">
+                    <p>아이디또는 비밀 번호가 올바르지 않습니다</p>
+                </div>
+                <!-- 모달 하단 -->
+                <footer class="modal_footer">
+                    <button type="button" data-colse="닫기"></button>
+                    <button type="button" id="modalOk">확인</button>
+                </footer>
+            </div>
+         </div>
+    </body>
+</html>
