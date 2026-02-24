@@ -12,7 +12,88 @@
                 <input type="text" id="Id" placeholder="아이디">
             </tr>
             <tr>
-                <td></td>
+                <td>비밀 번호</td>
+                <input type="password" id="mPassword" placeholder="비밀 번호">
+            </tr>
+            <tr>
+                <td>2차 비밀 번호</td>
+                <input type="password" id="passwordConfirm" placeholder="2차 비밀 번호">
+            </tr>
+            <tr>
+                <td>이름</td>
+                <input type="text" id="name" placeholder="이름">
+            </tr>
+            <tr>
+                <td>주소</td>
+
+            </tr>
+           </table>
+           
+            <!-- =========================
+            [약관 동의 섹션]
+            - 전체 동의 체크
+            - 필수(이용약관/개인정보) 체크
+            - 선택(마케팅) 체크
+            - 필수 미체크 시 가입 버튼 비활성화
+            ========================= -->
+           <section class="terms">
+            <h2>약관 동의</h2>
+             <!-- 전체 동의: 이걸 체크하면 아래 항목들 전부 같이 체크/해제 -->
+              <label for="terms-row terms-all">
+                <input type="checkbox" id="arreeAll">
+                <span>전체 동의 </span>
+              </label>
+              <hr class="terms-line">
+              <!--  필수 약관 1: 이용약관 -->
+              <label for="terms-row">
+                <input type="checkbox" class="agree-item-required" id="agreePrivacy">
+                <span>개인 정보 처리 방침 동의 필수</span>
+              </label>
+              
+             <!-- 선택 약관: 마케팅 수신 동의 (선택) -->
+              <label for="terms-row">
+                <input type="checkbox" class="agree-item" id="agreeMaketing">
+                <span>마케팅 정보 수신 동의</span>
+              </label>
+              <!-- 안내 문구(필수 체크 유도) --><!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <form action="join">
+           <table>
+            <tr>
+                <td>아이디</td>
+                <input type="text" id="Id" placeholder="아이디">
+            </tr>
+            <tr>
+                <td>비밀 번호</td>
+                <input type="password" id="mPassword" placeholder="비밀 번호">
+            </tr>
+            <tr>
+                <td>2차 비밀 번호</td>
+                <input type="password" id="passwordConfirm" placeholder="2차 비밀 번호">
+            </tr>
+            <tr>
+                <td>이름</td>
+                <input type="text" id="name" placeholder="이름">
+            </tr>
+            <tr>
+                <td>전화 번호</td>
+                <input type="text" id="phone" placeholder="전화 번호">    
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <input type="text" id="email" placeholder="이메일">@
+                <select name="email" id="email">
+                    <option value="">직접 입력</option>
+                    <option value="naver.com">네이버</option>
+                    <option value="kakao.com">카카오</option>
+                    <option value="gmail.com">구글</option>
+                </select>
+
             </tr>
            </table>
            
@@ -52,4 +133,40 @@
            </section>
         </form>
     </body>
+    <!-- =========================
+    [약관 동의 JS]
+    - 전체 동의 ↔ 개별 체크 동기화
+    - 필수 항목 체크 여부에 따라 가입 버튼 활성/비활성
+    ========================= -->
+    <script>
+        // 요소 가지고 오기 
+        const agreeAll = document.getElementById("areeAll");
+        const items= document.querySelectorAll(".agree-item");
+        const required = document.querySelectorAll(".agree-item-required");
+        const joinBtn = document.getElementById("joinBtn");
+        const termsHint = document.getElementById("termsHint");
+    </script>
+</html>
+               <p class="terms-hint" id="termsHint">
+                필수 약관에 동의 해야 회원 가입이 가능 합니다 
+               </p>
+                <!-- 회원가입 버튼: 필수 약관이 모두 체크되면 활성화 -->
+                 <button type="submit" id="joinBtn" disabled>회원 가입 </button>
+
+           </section>
+        </form>
+    </body>
+    <!-- =========================
+    [약관 동의 JS]
+    - 전체 동의 ↔ 개별 체크 동기화
+    - 필수 항목 체크 여부에 따라 가입 버튼 활성/비활성
+    ========================= -->
+    <script>
+        // 요소 가지고 오기 
+        const agreeAll = document.getElementById("areeAll");
+        const items= document.querySelectorAll(".agree-item");
+        const required = document.querySelectorAll(".agree-item-required");
+        const joinBtn = document.getElementById("joinBtn");
+        const termsHint = document.getElementById("termsHint");
+    </script>
 </html>
