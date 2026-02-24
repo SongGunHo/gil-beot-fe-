@@ -1,115 +1,244 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <title></title>
-    </head>
-    <body>
-        <form action="../member/join.html">
-            <table>
-                <tr>
-                    <td><label for="Id">아이디</label></td>
-                    <td><input type="text" id="Id" placeholder="아이디를 입력을 하세요"></td>
-                </tr>
-                <tr>
-                    <td><label for="mpassword">비밀 번호</label></td>
-                    <td><input type="password" id="mpassword" placeholder="비밀 번호를 입력 하세요"></td>
-                </tr>
-                <tr>
-                    <td><label for="PasswordConfirm">비밀 번호 확인</label></td>
-                    <td> <input type="password" id="PasswordConfirm" name="PasswordConfirm" placeholder="비밀 번호를 입력 하세요"></td>
-                </tr>
-                <tr>
-                    <td><label for="phone">전화 번호</label></td>
-                    <td><input type="text" id="phone" name="phone" placeholder="전화 번호를 입력 하세요"></td>
-                </tr>
-                <tr>
-                    <td><label for="emailId">이메일</label></td>
-                    <td><input type="text" id="emailId" name="emailId" placeholder="example@gmail.com"></td>
-                    <td><span>@</span></td>                    <td>
-                        <select id="emailDomain">
-                            <option value="직접 입력">직접 입력</option>
-                            <option value="naver.com">naver.com</option>
-                            <option value="kakao.com">kakao.com</option>
-                            <option value="gmail.com">gmail.com</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="zip">우편번호</label></td>
-                    <td><input type="text" id="zip" name="zip" placeholder="우편 번호" readonly></td><!--  readonly 는 필수 항목일 때 -->
-                    <td><button type="button" id="findZip">주소</button></td>
-                </tr>
-                <tr>
-                    <td><label for="addr1">기본주소</label></td>
-                    <td><input type="text" id="addr1" name="addr1" placeholder="기본 주소" readonly></td>
-                </tr>
-                <tr>
-                    <td><label for="addr2">상세 주소</label></td>
-                    <td><input type="text" id="addr2" name="addr2" placeholder="상세 주소" readonly></td>
-                </tr>
-                <td></td>
-                <td><button type="submit">회원 가입 완료</button></td>
-            </table>
-        </form>
-        <!--모달 성공 -->
-        <div class="modal" id="sucessModal" aria-hidden="true">
-            <div class="modal-backdrop" data-close="true"></div>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>회원가입</title>
 
-            <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="successTitle"></div>
-            <header class="modal_header">
-                <h2 id="sucessTitle">회원가입 완료</h2>
-                <button class="modal_close" type="button" data-close="true" aria-label="닫기"></button>
-            </header>
-            <div class="modal_body">
-                <p>회원 가입이 성공적으로 완료 되었습니다 . 로그인 페이지로 이동 합니다 </p>
-            </div>
-            <footer class="modal_footer">
-                <button type="button" id="goLogin">확인</button>
-            </footer>
+  <!-- =====================================================
+       다음(카카오) 주소 API
+       - 이 스크립트가 있어야 new daum.Postcode() 사용 가능
+       - 주소 찾기 팝업을 띄우는 공식 라이브러리
+       ===================================================== -->
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
 
-        </div>
+<body>
 
-    </body>
-    <script>
-        const findZip = document. getElementById("findZip");
-        const zip = document.getElementById("zip");
-        const addr1 = document.getElementById("addr1");
-        const addr2 = document.getElementById("addr2");
-        findZip.addEventListener("click" , ()=>{
-            new daum.Postcode({
-                oncomplete: function (data) {
-                    zip.value = data.zonecode;       // 우편번호
-                    addr1.value = data.address;      // 기본주소
-                    addr2.value = "";                // 상세주소는 비우고
-                    addr2.focus();                   // 상세주소 입력하도록 포커스
+  <!-- =====================================================
+       [1] 회원가입 폼 영역
+       - 사용자가 실제로 입력하는 영역
+       ===================================================== -->
+  <form action="../member/join.html" id="joinForm">
+    <table>
 
-                }
-            }).open();
-        })
-        //0) 폼/모달 요소
-        const form = document.querySelector("form"); // 네페이지에 form 하나라면 이걸로 충분
-        const sucessModal= document.getElementById("sucessModal");
-        const goLogin = document.getElementById("goLogin");
+      <!-- 아이디 -->
+      <tr>
+        <td><label for="Id">아이디</label></td>
+        <td>
+          <!-- 사용자가 입력 -->
+          <input type="text" id="Id" placeholder="아이디를 입력하세요">
+        </td>
+      </tr>
 
-        // ✅ 1) 모달 열고 닫기
-        function openSucessModal(){
-            sucessModal.classList.add("is-open");
-            sucessModal.setAttribute("aria-hidden", "false");
+      <!-- 비밀번호 -->
+      <tr>
+        <td><label for="mpassword">비밀번호</label></td>
+        <td>
+          <input type="password" id="mpassword" placeholder="비밀번호 입력">
+        </td>
+      </tr>
+
+      <!-- 비밀번호 확인 -->
+      <tr>
+        <td><label for="PasswordConfirm">비밀번호 확인</label></td>
+        <td>
+          <input type="password" id="PasswordConfirm" placeholder="비밀번호 재입력">
+        </td>
+      </tr>
+
+      <!-- 전화번호 -->
+      <tr>
+        <td><label for="phone">전화번호</label></td>
+        <td>
+          <input type="text" id="phone" placeholder="전화번호 입력">
+        </td>
+      </tr>
+
+      <!-- =============================
+           주소 영역 시작
+           ============================= -->
+
+      <!-- 우편번호 + 주소찾기 버튼 -->
+      <tr>
+        <td><label for="zip">우편번호</label></td>
+        <td>
+          <!-- readonly: 사용자가 직접 수정 못하게 -->
+          <input type="text" id="zip" placeholder="우편번호" readonly>
+        </td>
+        <td>
+          <!-- type="button" 중요!
+               submit 방지 -->
+          <button type="button" id="findZip">주소 찾기</button>
+        </td>
+      </tr>
+
+      <!-- 기본주소 -->
+      <tr>
+        <td><label for="addr1">기본주소</label></td>
+        <td>
+          <input type="text" id="addr1" placeholder="기본주소" readonly>
+        </td>
+      </tr>
+
+      <!-- 상세주소 -->
+      <tr>
+        <td><label for="addr2">상세주소</label></td>
+        <td>
+          <!-- 상세주소는 사용자가 입력해야 하므로 readonly ❌ -->
+          <input type="text" id="addr2" placeholder="상세주소">
+        </td>
+      </tr>
+
+      <!-- =============================
+           약관 보기
+           ============================= -->
+      <tr>
+        <td>약관</td>
+        <td>
+          <!-- 새 탭으로 약관 페이지 열기 -->
+          <a href="../member/terms.html" target="_blank">약관 보기</a>
+        </td>
+      </tr>
+
+      <!-- 회원가입 버튼 -->
+      <tr>
+        <td></td>
+        <td>
+          <!-- submit 발생 → JS에서 가로챔 -->
+          <button type="submit">회원 가입 완료</button>
+        </td>
+      </tr>
+
+    </table>
+  </form>
+
+  <!-- =====================================================
+       [2] 회원가입 성공 모달
+       - CSS는 내일 붙일 예정
+       - 지금은 구조만 만들어 둠
+       ===================================================== -->
+  <div class="modal" id="successModal" aria-hidden="true">
+
+    <!-- 배경 클릭 시 닫기 처리용 -->
+    <div class="modal-backdrop" data-close="true"></div>
+
+    <!-- 실제 모달 박스 -->
+    <div class="modal-panel"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="successTitle">
+
+      <!-- 모달 헤더 -->
+      <header class="modal_header">
+        <h2 id="successTitle">회원가입 완료</h2>
+
+        <!-- X 버튼 (닫기) -->
+        <button
+          class="modal_close"
+          type="button"
+          data-close="true"
+          aria-label="닫기">X</button>
+      </header>
+
+      <!-- 모달 본문 -->
+      <div class="modal_body">
+        <p>회원가입이 성공적으로 완료되었습니다. 로그인 페이지로 이동합니다.</p>
+      </div>
+
+      <!-- 모달 하단 -->
+      <footer class="modal_footer">
+        <!-- 확인 버튼 -->
+        <button type="button" id="goLogin">확인</button>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- =====================================================
+       [3] JS 영역
+       ===================================================== -->
+  <script>
+
+    /* =====================================================
+       A. 다음 주소 찾기 기능
+       ===================================================== */
+
+    // 요소 가져오기
+    const findZip = document.getElementById("findZip");
+    const zip = document.getElementById("zip");
+    const addr1 = document.getElementById("addr1");
+    const addr2 = document.getElementById("addr2");
+
+    // 주소찾기 버튼 클릭
+    findZip.addEventListener("click", () => {
+      new daum.Postcode({
+        oncomplete: function (data) {
+          zip.value = data.zonecode;   // 우편번호 입력
+          addr1.value = data.address;  // 기본주소 입력
+          addr2.value = "";            // 상세주소 초기화
+          addr2.focus();               // 상세주소로 커서 이동
         }
-        function closeSucessModal(){
-            sucessModal.classList.remove("is-open");
-            sucessModal.setAttribute("arai-hidden", "true");
+      }).open();
+    });
 
-        }
-        // ✅ 2) 제출 시 성공 모달 띄우기 (지금은 프론트 가정)
-        form.addEventListener("submit" ,(e)=>{
-            e.preventDefault(); // 실제 제출 막기
-            // (선택) 여기에서 필수 검증을 추가해도 됨
-            // 예: 비번/확인 일치, 빈칸 체크 등
-            openSucessModal();
-            // ✅ 3) 모달 배경/닫기버튼 클릭 닫기
-        })
-    </script>
+    /* =====================================================
+       B. 성공 모달 제어
+       ===================================================== */
+
+    // 폼
+    const form = document.getElementById("joinForm");
+
+    // 모달
+    const successModal = document.getElementById("successModal");
+
+    // 로그인 이동 버튼
+    const goLoginBtn = document.getElementById("goLogin");
+
+    // 모달 열기
+    function openSuccessModal() {
+      successModal.classList.add("is-open");
+      successModal.setAttribute("aria-hidden", "false");
+    }
+
+    // 모달 닫기
+    function closeSuccessModal() {
+      successModal.classList.remove("is-open");
+      successModal.setAttribute("aria-hidden", "true");
+    }
+
+    /* =====================================================
+       C. 회원가입 제출 가로채기
+       ===================================================== */
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();        // 실제 서버 전송 막기
+      openSuccessModal();        // 성공 모달 표시
+    });
+
+    /* =====================================================
+       D. 배경/X 클릭 닫기
+       ===================================================== */
+    successModal.addEventListener("click", (e) => {
+      if (e.target.dataset.close === "true") {
+        closeSuccessModal();
+      }
+    });
+
+    /* =====================================================
+       E. ESC 키로 모달 닫기
+       ===================================================== */
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && successModal.classList.contains("is-open")) {
+        closeSuccessModal();
+      }
+    });
+
+    /* =====================================================
+       F. 확인 버튼 → 로그인 페이지 이동
+       ===================================================== */
+    goLoginBtn.addEventListener("click", () => {
+      location.href = "../member/login.html";
+    });
+
+  </script>
+</body>
 </html>
