@@ -3,6 +3,88 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+         <style>
+            /*1 모달 기본 숨김*/
+            .modal {
+                display: none; /*화면에서 완전하게 숨김(공간도 안 차지함)*/
+            }
+            /* 2열렸을때*/
+            .modal.is-open {
+                display: block; /*화면에 표시*/
+                position: fixed;/*화면 기준으로 고정*/
+                inset: 0; /*top/right/bottom/left= 0 과 동일*/
+                z-index: 9999; /*다른 요소를 위에 표시*/
+            }
+            /*3 배경 어둡게 만드는 레이어 */
+            .modal-backdrop {
+                position: absolute;/* 부모(.modal) 기준 위치*/
+                inset: 0; /*부모 전체 닫기*/
+                background: rgba(0, 0, 0, 0.55); /* 반투명 검정 배경 */
+            }
+            /*4. 모달 카드 (실제 박스) */
+            .modal-panel{
+                position: relative; /* 내부 기준 요소 */
+                width: min(420px, calc(100% - 32px));  /* 최대 420px, 모바일 대응 */
+                margin: 12vh auto 0; /* 위에서 12vh, 좌우 가운데 */
+                background: #fff; /* 흰 배경 */
+                border-radius:  14px ; /* 둥근 모서리 */
+                padding: 20px;  /* 내부 여백 */
+                box-shadow:  0 20px 60px rgba(0, 0, 0, 0.25); /* 그림자 */
+                z-index: 1;
+            }
+            /*5. 해더 영역 (제목 + x 버튼) */
+            .modal_header {
+                display: flex; /* 가로 정렬 */
+                align-items: center; /*세로 가운데*/
+                justify-content: space-between; /*양쪽 끝 정렬*/
+                margin-bottom: 12px; /*아래 여백*/
+            }
+             /*6. 닫기(x) 버튼  */
+             .modal_close {
+                border: none; /*테두리 제거*/
+                background: transparent; /* 배경 제거*/
+                font-size: 22px; /*글씨 크기*/
+                cursor: pointer; /*마우스 커서*/
+                line-height: 1;
+             }
+             .modal_close:hover {
+                opacity: 0.6; /*마우스 올리면 쌀짝 흐림*/
+             }
+              /*7.본문 영역 */
+              .modal.body {
+                font-size: 15px; /*본문 글자 크기*/
+                color: #333; /* 색상*/
+                margin-bottom: 18px; /*아래 여백*/
+              }
+             /*8. 하단 버튼 영역  */
+             .modal_footer {
+                display: flex; /*버튼 가로 배치*/
+                justify-content: flex-end; /* 오른쪽 정렬 */
+                gap: 8px; /* 버튼 사이 간격*/
+             }
+             .modal_footer button {
+                padding: 8px 14px;      /* 버튼 크기 */
+                border-radius: 8px;     /* 둥근 버튼 */
+                border: none;           /* 테두리 제거 */
+                cursor: pointer;        /* 클릭 커서 */
+            }
+            /* 🔹 닫기 버튼 스타일 */
+            .modal_footer button[data-close="true"]{
+                background: #e5e7eb; /*회색 버튼 */
+            }
+            /* 🔹 확인 버튼 스타일 */
+            #modalOk {
+                background: #3b82f6; /*파란 버튼*/
+                color: white; /*글자 횐색*/
+            }
+            /* 🔹 (선택) 모달 열릴 때 스크롤 잠금 */
+            body.no-scroll {
+                overflow: hidden; /*페이지 스클롤 막기*/
+            }
+
+         </style>
+
+
     </head>
     <body>
         <!-- 버튼-->
@@ -10,12 +92,12 @@
 
          <!--모달-->
          <div class="modal" id="modal" aria-hidden="true">
-            <div class="modal-backdrop" data-colse="true"></div>
-            <div class="modal-pnel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-backdrop" data-close="true"></div>
+            <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
                 <!--화면에 보이는 것 -->
                 <header class="modal_header">
                     <h2 id="modalTitle">알림</h2>
-                    <button class="modal_close" type="button" data-colse="true" aria-label="닫기"></button>
+                    <button class="modal_close" type="button" data-close="true" aria-label="닫기"></button>
                 </header>
            
 
@@ -24,10 +106,48 @@
                 </div>
                 <!-- 모달 하단 -->
                 <footer class="modal_footer">
-                    <button type="button" data-colse="닫기"></button>
+                    <button type="button" data-close="true">닫기</button>
                     <button type="button" id="modalOk">확인</button>
                 </footer>
             </div>
          </div>
     </body>
+<script>
+  const openBtn = document.querySelector("#openModal");
+  const modal = document.querySelector("#modal");
+  const okBtn = document.querySelector("#modalOk");
+
+  function openModal() {
+    modal.classList.add("is-open");              // ✅ 열기
+    modal.setAttribute("aria-hidden", "false");  // ✅ 접근성 속성
+    // document.body.classList.add("no-scroll"); // (선택) 스크롤 잠금
+  }
+
+  function closeModal() {
+    modal.classList.remove("is-open");           // ✅ 닫기
+    modal.setAttribute("aria-hidden", "true");
+    // document.body.classList.remove("no-scroll");
+  }
+
+  // 열기
+  openBtn.addEventListener("click", openModal);
+
+  // 배경/닫기 버튼 클릭 닫기 (data-close="true" 공통 처리)
+  modal.addEventListener("click", (e) => {
+    if (e.target.dataset.close === "true") closeModal();
+  });
+
+  // ESC 닫기
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+
+  // 확인 버튼
+  okBtn.addEventListener("click", () => {
+    closeModal();
+    // location.href = "/gobal/main.html"; // ✅ 이동 원하면 이걸 사용
+  });
+</script>
 </html>
