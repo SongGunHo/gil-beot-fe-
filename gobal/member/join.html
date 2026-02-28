@@ -20,7 +20,7 @@
     }
     /* 1) 회원가입 폼 카드 영역 */
     /* 폼 전체를 카드처럼 보이게 */
-    #joinform {
+    #joinForm {
       max-width: 520px; /*최대 너비 제한*/
       margin: 0 auto; /* 가운데 정렬 */
       background: #fff; /* 횐 배경 */
@@ -28,8 +28,39 @@
       border-radius: 14px; /* 둥근 모서리 */
       padding: 22px 18px ; /* 내부 여백 */
       box-shadow: 0 10px 30px rgba(0, 0,0, 0, 0.5); /* 그림자 */
-
     }
+    /* 테이블 전체 폭 */
+    #joinForm table {
+      width: 100%;
+      border-collapse: collapse; /* 셀 간격 제거  */
+    }
+    /* 각 셀 여백 */
+    #joinForm td {
+      padding: 10px 8px;
+      vertical-align: middle;
+    } 
+    /* 라벨 스타일 */
+    #joinForm label{
+      font-weight: 600px;
+      font-size: 14px;
+      color: #222;
+      display: inline-block;
+      min-width: 90px;
+    }
+    /*2) 인풋 공통 스타일*/
+    /*텍스트/ 페스워드 입력 공통*/
+    #joinForm input[type= "text"],
+    #joinForm input[type= "password"]{
+      width: 100%; /*셀 꽉채움/  */
+      padding: 12px; /*내부 여백*/
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
+      background: #111;
+      transition: border-color 0.15s ease,
+              box-shadow 0.15s ease; /* 포커스 애니메이션 */
+    }
+    
   </style>
 
   <!-- =====================================================
