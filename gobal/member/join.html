@@ -103,7 +103,99 @@
     }
   /*4) 모달 스타일*/
     /*기본은 숨김*/
-    
+    .modal {
+      position: fixed; /*화면(viewport)에 붙여서 위치 고정*/
+      inset: 0; /*top/ rigth/ bottiom /left = 0 -> 화면 전체 닫기*/
+      display: none; /*기본 숨김*/
+      z-index: 999; /*다른 요소보다 위에 올라오게 */
+    }
+    /*모달 열림 상태  - JS에서 successModal.classList.add("is-open") 하면 적용됨 */
+    .modal-is-open {
+      display: block; /*보여주기*/
+
+    }
+    /* [3] 배경(어두운 오버레이)- 클릭하면 닫히게(data-close="true") 처리해둠 */
+    .modal-backdrop {
+      position: absolute;  /*.modal내부 기준 으로 정렬*/
+      inset: 0;  /*화면 전체 닫기*/
+      background: rgba(0, 0,0, 0, 0.45); /*반투명 검정 배경*/
+    }
+    /* [4] 실제 모달 박스(패널) - 중앙에 뜨는 흰 박스 */
+    .modal-panel{
+      position: relative; /*x 버튼/ 내용 배치를 안정적으로*/
+      width: min(520px, calc(100px -32px)); /* pc는 520px 모바일은 10px 여백 */
+      margin: 0 auto; /*가로 중앙 정렬*/
+      top: 18vh; /*화면 위에 18% 내려온 위치*/
+      background: #fff; /*박스 배경*/
+      border-radius: 14px;  /*둥근 모서리*/
+      border: 1px solid #e638ee;
+      box-shadow: 0 20px  60px rgba(0, 0,0, 0, 0.25); /*모달 입체감*/
+      overflow: hidden; /*둥근 모서리  밖으로 내용 튀는 것을 방지 */
+    }
+  /*[5] 모달 헤더 - 제목 + 닫기 버튼 */
+    .modal_header {
+      display: flex; /*제목과 x 버튼을 한줄에 */
+      align-items: center; /*세로 가운데 정렬*/
+      justify-content: space-between; /*좌 제목/ 우:x 버튼*/
+      padding: 14px 16px; /*내부 여백*/
+      border-bottom: 1px solid #eef0f5;
+    }
+    /*해더 제목*/
+    .modal_header h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+  /* [6] 닫기 버튼(X) - 모달 우측 상단 */
+    .modal_close{
+      width: 36px; /*가로 여백*/
+      height: 30px; /*위에 여백*/
+      border-radius: 10px;
+      border: 1px solid #e6e8ee;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    /*hover 시 살짝 배경 변화*/
+    .modal_close:hover {
+      background: #f4f6fb;
+    }
+  /*[7] 모달 본문*/
+    .modal_body {
+      padding: 10px 16px;
+      color: #333;
+      line-height: 1.6; /*줄간격*/
+    }
+  /* [8] 모달 하단(푸터) - 확인 버튼 배치 */
+    .modal_footer{
+      padding: 14px 16px 18px;
+      display: flex;
+      justify-content: flex-end; /*버튼을 오른쪽으로*/
+      gap: 10px;
+      border-top: 1px solid #eef0f5;
+    }
+  /* [9] 확인 버튼 */
+    #goLogin {
+      background: #2563eb;
+      color: #fff;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    /* hover / active 효과 */
+    #goLogin:hover {
+      opacity: 0.94;
+    }
+    #goLogin:active {
+      transform: translateY(1px); /*늘리는 느낌*/
+    }
+  /*모바일 대응(선택)- 화면이 좁을 때 모달이 조금 더 위로 오게*/
+    @media (max-width: 520px){
+      .modal-panel {
+        top: 14vh;
+      }
+    }
   </style>
 
   <!-- =====================================================
@@ -225,21 +317,14 @@
     <div class="modal-backdrop" data-close="true"></div>
 
     <!-- 실제 모달 박스 -->
-    <div class="modal-panel"
-         role="dialog"
-         aria-modal="true"
-         aria-labelledby="successTitle">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="successTitle">
 
       <!-- 모달 헤더 -->
       <header class="modal_header">
         <h2 id="successTitle">회원가입 완료</h2>
 
         <!-- X 버튼 (닫기) -->
-        <button
-          class="modal_close"
-          type="button"
-          data-close="true"
-          aria-label="닫기">X</button>
+        <button class="modal_close" type="button" data-close="true" aria-label="닫기">X</button>
       </header>
 
       <!-- 모달 본문 -->
