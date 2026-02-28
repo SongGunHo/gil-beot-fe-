@@ -3,6 +3,34 @@
 <head>
   <meta charset="utf-8">
   <title>회원가입</title>
+  <style>
+    /*기본 리셋 + 폰트*/
+    *{
+      /* 모든 요소에 box-sizing 적용
+   → padding, border 포함해서 width 계산됨 */
+      box-sizing: border-box;
+    }
+    /* 전체 배경과 기본 폰트 설정 */
+    body {
+      margin: 0; /*기본 여백*/
+      padding: 40px 16px; /*위아래 좌우 여백 */
+      font-family: system-ui, -apple-system, "Noto Sans KR", sans-serif; /**/
+      background: #f5f7fb; /*연한 회색 배경*/
+      color: #111;
+    }
+    /* 1) 회원가입 폼 카드 영역 */
+    /* 폼 전체를 카드처럼 보이게 */
+    #joinform {
+      max-width: 520px; /*최대 너비 제한*/
+      margin: 0 auto; /* 가운데 정렬 */
+      background: #fff; /* 횐 배경 */
+      border: 1px solid #e638ee;
+      border-radius: 14px; /* 둥근 모서리 */
+      padding: 22px 18px ; /* 내부 여백 */
+      box-shadow: 0 10px 30px rgba(0, 0,0, 0, 0.5); /* 그림자 */
+
+    }
+  </style>
 
   <!-- =====================================================
        다음(카카오) 주소 API
