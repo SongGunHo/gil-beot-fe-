@@ -60,6 +60,49 @@
       transition: border-color 0.15s ease,
               box-shadow 0.15s ease; /* 포커스 애니메이션 */
     }
+    /* readonly 입력창 톤 다운 */
+    #joinForm input:focus {
+      border-color: #4a7cff;
+      box-shadow: 0 0 0 4px rgba(74, 124,255,0.12);
+    }
+    /* placeholder 색 */
+    #joinForm input::placeholder {
+      color: #9aa3b2;
+    }
+  /*3) 버튼 스타일*/
+    /* 버튼 공통 */
+    #joinForm button {
+      padding: 12px 14px;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      transition: transform 0.08s ease,
+              opacity 0.15s ease; /* 애니메이션 설정*/
+    }
+    /* 주소찾기 버튼 */
+    #findZip {
+      width: 100%;
+      background: #eef2ff;
+      color: #2a45d8;
+    }
+    /* hover 효과 */
+    #findZip:hover{
+      opacity: 0.92;
+    }
+    /*클릭 눌림 효과*/
+    #findZip:active{
+      transform: translateY(1px);
+    }
+    /*회원 가입 완료 버튼*/
+    #joinForm button[type="submit"] {
+      width: 100%;
+      background:  #2563eb;
+      margin-top: 6px;
+    }
+  /*4) 모달 스타일*/
+    /*기본은 숨김*/
     
   </style>
 
