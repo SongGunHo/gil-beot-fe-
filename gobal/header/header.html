@@ -3,6 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <style>
+            /*nav 줄 정리*/
+            nav{
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            /*드롭다운 부모 - position: relative 필수! - 자식 메뉴(position:absolute)의 기준점이 됨*/
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            /* 드롭다운 메뉴 기본 상태 - 처음에는 숨김 (display: none) - absolute로 버튼 아래에 위치*/
+            .dropdown__meun{
+                display: none; /*기본 숨김*/
+                position: absolute; /*버튼 기준으로 떠야 함*/
+                top: calc(100px + 8px); /*버튼 아래 8px 떨어짐*/
+                
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -16,7 +37,7 @@
                 </nav>
                 <div class="dropdown">
                     <button type="button" class="dropdown__btn" aria-expanded="false" >마이페이지</button>
-                    <div class="dropdown__meun" role="menu">
+                    <div class="dropdown__menu" role="menu">
                         <a href="#" role="menuitem">내정보</a>
                         <a href="#" role="menuitem">예약 정보</a>
                     </div>
@@ -24,7 +45,7 @@
                 <!--드롭 다운2-->
                 <div class="dropdown">
                     <button type="button" class="dropdown__btn" aria-expanded="false">고객센터</button>
-                    <div class="dropdown__meun" role="menu">
+                    <div class="dropdown__menu" role="menu">
                         <a href="#" role="menuitem">공지사항</a>
                         <a href="#" role="menuitem">문의 사항</a>
 
@@ -60,11 +81,11 @@
                 });
             });
             // 바깥 클릭시 닫기 
-            document.addEventListener("click", ()=>{
-                dropdown.forEach(dd =>{
-                    if(!dd.contains(e.toggle)){
+            document.addEventListener("click", (e) => {
+                dropdown.forEach(dd => {
+                    if (!dd.contains(e.target)) {
                         dd.classList.remove("is-open");
-                        dd.querySelector(".dropdown__btn")?.setAttribute("aria-expanded", false);
+                        dd.querySelector(".dropdown__btn")?.setAttribute("aria-expanded", "false");
                     }
                 });
             });
@@ -73,7 +94,7 @@
                 if(e.key === "Escape"){
                     dropdown.forEach(dd =>{
                         dd.classList.remove("is-open");
-                        dd.querySelector("dropdown__btn")?.setAttribute("arai-expanded", "false");
+                        dd.querySelector(".dropdown__btn")?.setAttribute("aria-expanded", "false");
                     });
                 }
             })
