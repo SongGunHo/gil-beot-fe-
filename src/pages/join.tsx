@@ -1,7 +1,7 @@
 // 리액트 에서 상태 state 을 사용 하기 위해 userstate  import 
 import { useState } from "react";
 
-function join(){
+function Join(){
     // 입력값 관리 (state)
     // 이름 입력 값 
     const [name, setName] = useState("");
@@ -10,7 +10,7 @@ function join(){
     // 비밀 번호 입력 값 
     const [password, setPassword] = useState ("");
     // 우편 번호 입력 값  
-    const [zipcode, setZipCode] = useState("");
+    const [zipcode, setZipcode] = useState("");
     // 주소 입력 값 
     const [address, setAddress] = useState("");
     // 상세 주소 입력 창 
@@ -18,8 +18,55 @@ function join(){
 
     // 회원 가입 필수 
     const join = async ()=>{
-        const reponse = await fetch("http://localhost:8080/api/member/join",{
+        const response = await fetch("http://localhost:8080/api/member/join",{
             // http 요청 방식 (post: 데이터 생성)
-        })
-    }
+            method: "POST",
+            // 서버에 json 데이터라고 알려주는 해더 
+            headers: {
+                "Content-Type": "application/json",
+            
+            },
+            // 입력값 json 형식으로 변환하여 서버로 잔송 
+            body:JSON.stringify({
+                name,
+                email,
+                password,
+                zipcode,
+                address,
+                detailAddress,
+            }),
+
+        });
+        // 서버 응답이 실패인 경우 
+        if(!response.ok){
+            alert("회원 가입 실패 ")
+            return;
+        }
+        // 성공시 알 림
+         alert("회원 가입 성공");
+    };
+    return (
+        <div>
+            <h2>회원 가입 </h2>
+            {/**이름 입력 값  */}
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" /> <br/><br/>
+            {/**이메일  */}
+            <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일" /><br/><br/>
+            {/**비밀 번호 */}
+            <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} placeholder="비밀 번호"/><br/><br/>
+            {/**우편 번호 */}
+            <input value={zipcode} onChange={(e) => setZipcode(e.target.value)} placeholder="우편 번호" /><br/><br/>
+            {/**기본 주소  */}
+            <input value={address} onChange={(e)=> setAddress(e.target.value)} placeholder="기본 주소 " /><br/><br/>
+            {/**상세 주소*/}
+            <input value={detailAddress} onChange={(e=>setDetailAddress(e.target.value))} placeholder="상세 주소" /><br/><br/>
+            {/**회원 가입 버튼*/}
+            <button onClick={join}>회원 가입 </button>
+
+        </div>
+        
+    )
+
 }
+// 다른 파일 에서 사용 할 수 있도로 export
+export default Join;
