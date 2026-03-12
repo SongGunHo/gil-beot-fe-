@@ -3,12 +3,14 @@ import { useState } from "react";
 
 function Join(){
     // 입력값 관리 (state)
-    // 이름 입력 값 
-    const [name, setName] = useState("");
     // 이메일 입력값 
     const [email, setEmail] = useState("");
     // 비밀 번호 입력 값 
     const [password, setPassword] = useState ("");
+    // 2차 비밀 번호 입력 값 
+    const [ConfirmPassword, setConfirmPassword] = useState("");
+    // 이름 입력 값 
+    const [name, setName] = useState("");
     // 우편 번호 입력 값  
     const [zipcode, setZipcode] = useState("");
     // 주소 입력 값 
@@ -48,12 +50,15 @@ function Join(){
     return (
         <div>
             <h2>회원 가입 </h2>
-            {/**이름 입력 값  */}
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" /> <br/><br/>
+          
             {/**이메일  */}
             <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일" /><br/><br/>
             {/**비밀 번호 */}
             <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} placeholder="비밀 번호"/><br/><br/>
+            {/**2차비밀 번호 */}
+            <input type="password" value={ConfirmPassword} onChange={(e)=> setConfirmPassword(e.target.value)} placeholder="비밀 번호"/><br/><br/>
+              {/**이름 입력 값  */}
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" /> <br/><br/>
             {/**우편 번호 */}
             <input value={zipcode} onChange={(e) => setZipcode(e.target.value)} placeholder="우편 번호" /><br/><br/>
             {/**기본 주소  */}
