@@ -47,9 +47,11 @@ function Join(){
             },
             // 입력값 json 형식으로 변환하여 서버로 잔송 
             body:JSON.stringify({
-                name,
                 email,
                 password,
+                name,
+                phone,
+                gender,
                 zipcode,
                 address,
                 detailAddress,
